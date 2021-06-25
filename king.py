@@ -30,7 +30,9 @@ class mygrid(GridLayout):
         Vnombre=self.nombre.text
         Vdireccion=self.direccion.text
         if Vpedido=='' or Vtelefono=='' or Vnombre=='' or Vdireccion=='':
-            print("digite vcalores")
+            popup = Popup(title='ERROR',content=Label(text='Informacion Incompleta',font_size=26),size_hint=(None, None), size=(400, 400),auto_dismiss=True)
+            popup.open()
+            #print("digite vcalores")
         else:
             self.pedido.text=''
             self.telefono.text=''
@@ -42,7 +44,7 @@ class mygrid(GridLayout):
             for docu in pedidos:
                 Numeropedidos+=int(docu['contador'])
             fecha=time.strftime("%H:%M  %e/%m/%Y")
-            self.info.text+="#   "+str(Numeropedidos+1)+"\n"+"-   "+Vpedido+"\n"+"-   "+Vtelefono+"\n"+"-   "+Vnombre+"\n"+"-   "+Vdireccion+"\n"+"-   "+fecha+"\n_______________________________________\n"
+            self.info.text+="#   "+str(Numeropedidos)+"\n"+"-   "+Vpedido+"\n"+"-   "+Vtelefono+"\n"+"-   "+Vnombre+"\n"+"-   "+Vdireccion+"\n"+"-   "+fecha+"\n_______________________________________\n"
             pedidos = db['pedidos']
             buscar=pedidos.find_one({
                 'telefono':Vtelefono
@@ -72,11 +74,12 @@ class mygrid(GridLayout):
                     }
                 })
             if int(contador)%cicloBeneficio==0:
+                popup = Popup(title='Aviso',content=Label(text="Ha pedido "+contador+" veces",font_size=26),size_hint=(None, None), size=(400, 400),auto_dismiss=True)
+                popup.open()
                 print("ya ha pedido "+contador+" veces")
 
 
-        #popup = Popup(title ='Demo Popup')   
-        #popup.open()    
+            
 
     def __init__(self,**kwargs):
         super(mygrid,self).__init__(**kwargs)
